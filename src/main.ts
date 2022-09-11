@@ -46,6 +46,7 @@ export class Main extends LitElement {
     this.setPosition(this.position);
     this.style.position = "fixed";
     this.style.width = "100%";
+    this.style.zIndex = "100000";
     this.setMaxWidth(576);
   }
 
@@ -171,14 +172,4 @@ export class Main extends LitElement {
   }
 }
 
-const mainEl = document.createElement("fast-card-body") as Main;
-const button = document.createElement("button");
-document.body.append(button);
-document.body.append(mainEl);
-button.innerHTML = "click";
-button.classList.add("button");
-button.addEventListener("click", () => {
-  mainEl.toggleShow();
-});
-mainEl.setPosition({ top: 100, left: 100 });
-mainEl.setShow(true);
+document.body.dispatchEvent(new CustomEvent("fastCardLoaded"));

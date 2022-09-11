@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mainEl = document.createElement("fast-card-body");
+      const button = document.createElement("button");
+      document.body.append(button);
+      document.body.append(mainEl);
+      button.innerHTML = "click";
+      button.classList.add("button");
+      button.addEventListener("click", () => {
+        mainEl.toggleShow();
+      });
+      mainEl.setPosition({ top: 100, left: 100 });
+      mainEl.setShow(true);
+    })
+  </script>
+</body>
+
 </html>
