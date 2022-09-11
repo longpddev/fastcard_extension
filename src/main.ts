@@ -158,7 +158,7 @@ export class Main extends LitElement {
     >
       <span-width
         position="left"
-        class="absolute top-0 left-0 w-1.5 z-10 bg-sky-400 opacity-0 hover:opacity-50 transition-all block h-full"
+        class="absolute top-0 left-0 w-1 z-10 bg-sky-400 opacity-0 hover:opacity-50 transition-all block h-full"
       >
       </span-width>
       <header-element
@@ -167,7 +167,7 @@ export class Main extends LitElement {
       <main-content></main-content>
       <span-width
         position="right"
-        class="absolute top-0 right-0 w-1.5 z-10 bg-sky-400 block opacity-0 hover:opacity-50 transition-all h-full"
+        class="absolute top-0 right-0 w-1 z-10 bg-sky-400 block opacity-0 hover:opacity-50 transition-all h-full"
       >
       </span-width>
     </div>`;

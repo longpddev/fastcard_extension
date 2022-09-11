@@ -3,7 +3,9 @@ import { isValidUrl } from "./../common";
 interface IResponse extends Response {
   data: any;
 }
-export const baseUrl = `${import.meta.env.VITE_URL_BACKEND}/api/v1`;
+
+export const hostApi = "http://139.162.50.214:6969";
+export const baseUrl = `${hostApi}/api/v1`;
 const createMethod = async (
   point: string,
   method: string,
@@ -112,6 +114,6 @@ export const getMedia = (url: string) => {
   if (isValidUrl(url)) {
     return url;
   } else {
-    return `${import.meta.env.VITE_URL_BACKEND}/${url}`;
+    return `${hostApi}/${url}`;
   }
 };
