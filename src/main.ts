@@ -152,6 +152,7 @@ export class Main extends LitElement {
 
   render() {
     if (!this.isShow) return html``;
+
     return html` <div class="fastcard-body rounded-md relative px-3">
       <span-width
         position="left"

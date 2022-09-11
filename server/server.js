@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
   const parentPath = path.slice(0, path.length - 1).join("/");
 
   const files = fs.readdirSync(parentPath + "/dist/assets");
-  const file = files.filter((item) => /().js)$/.test(item))[0];
+  const file = files.filter((item) => /(.js)$/.test(item))[0];
   if (file) {
     res.sendFile(parentPath + `/dist/assets/` + file);
     return;
