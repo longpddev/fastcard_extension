@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
     res.sendFile(parentPath + `/dist/assets/` + file);
     return;
   }
+
   res.send("");
 });
 
