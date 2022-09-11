@@ -153,7 +153,9 @@ export class Main extends LitElement {
   render() {
     if (!this.isShow) return html``;
 
-    return html` <div class="fastcard-body rounded-md relative px-3">
+    return html` <div
+      class="fastcard-body rounded-md relative px-3 border border-slate-500"
+    >
       <span-width
         position="left"
         class="absolute top-0 left-0 w-1.5 z-10 bg-sky-400 opacity-0 hover:opacity-50 transition-all block h-full"
