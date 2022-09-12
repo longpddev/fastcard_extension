@@ -240,7 +240,9 @@ export class CreateFastCard extends BaseElement {
             <span>Send</span>
             ${this.isLoading
               ? html`<span class="ml-2 inline-flex"></span
-                  ><icon-loading class="animate-spin"></icon-loading>`
+                  ><icon-loading-fastcard
+                    class="animate-spin"
+                  ></icon-loading-fastcard>`
               : ""}
           </button>
         </div>

@@ -36,6 +36,7 @@ export class Maybe {
   constructor(value: Maybe | any) {
     let result = value;
     if (value instanceof Maybe) result = value.get();
+    if (result === undefined) result = [];
     if (!Array.isArray(result)) result = [result];
     console.log(result);
     this.data = result;

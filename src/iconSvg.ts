@@ -32,7 +32,7 @@ class IconBase extends LitElement {
   }
 }
 
-@customElement("icon-loading")
+@customElement("icon-loading-fastcard")
 export class IconLoading extends IconBase {
   iconWidth = 512;
   iconHeight = 512;
