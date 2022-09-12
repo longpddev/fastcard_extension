@@ -28,7 +28,7 @@ const createMethod = async (
     if (isObject) return JSON.stringify(body);
     return body;
   };
-  let result = await fetchAPI(`${baseUrl}${point}`, {
+  let result = await window.fetchAPI(`${baseUrl}${point}`, {
     method,
     body: getBody(),
     mode: "cors",
