@@ -21,7 +21,6 @@ appSettings.emitter.on("fetGetUserInfoDone", () => {
 
 appSettings.emitter.on("addCardWithSelectedText", (text: string) => {
   appSettings.emitter.emit("showFastCard", true);
-  appSettings.emitter.emit("dragging", { left: 100, top: 100 });
   appSettings.set("mainPage", MAIN_PAGE.addCard);
 
   setTimeout(() => {

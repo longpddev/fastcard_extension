@@ -56,6 +56,7 @@ export class Main extends LitElement {
     this.style.width = "100%";
     this.style.zIndex = "100000";
     this.setMaxWidth(375);
+    this.setPosition({ left: 100, top: 100 });
   }
 
   bindEmitter() {
