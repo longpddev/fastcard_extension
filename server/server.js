@@ -4,7 +4,7 @@ const app = express();
 const fs = require("fs");
 const port = 6600;
 app.use(cors());
-app.use(express.static("public"));
+app.use("/public", express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => {
   const path = __dirname.split("/");
