@@ -12,7 +12,6 @@ declare global {
 
 !("fetchAPI" in window) && (window.fetchAPI = fetch);
 
-console.log(window.fetchAPI);
 const createMethod = async (
   point: string,
   method: string,
