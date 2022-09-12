@@ -17,7 +17,7 @@ export class CreateFastCard extends BaseElement {
   @property() question_detail = "";
   @property() answer_detail = "";
   @property() explain_detail = "";
-  @property() groupId = 0;
+  @property() groupId = -1;
   @property() isLoading = false;
   @property() message = html``;
   timeoutRemoveMessage = 0;
@@ -63,6 +63,15 @@ export class CreateFastCard extends BaseElement {
     e.preventDefault();
     if (!this.isFirstSubmit) this.isFirstSubmit = true;
 
+    if (
+      !["question_detail", "answer_detail", "explain_detail", "groupId"]
+        .map((value) =>
+          this.validate(this[value as keyof typeof this] as string, value)
+        )
+        .every((item) => item.length === 0)
+    )
+      return;
+
     fetchCreateCard({
       groupId: this.groupId,
       question_detail: this.question_detail,
@@ -73,6 +82,7 @@ export class CreateFastCard extends BaseElement {
         this.question_detail = "";
         this.answer_detail = "";
         this.explain_detail = "";
+        this.isFirstSubmit = false;
         this.createMessage(html`
           <p class="text-green-400 font-medium text-center text-xl">
             Create success
@@ -101,8 +111,27 @@ export class CreateFastCard extends BaseElement {
     clearTimeout(this.timeoutRemoveMessage);
   }
 
-  validate(value: any, type: Fields) {
-    return "";
+  validate(value: string, type: string) {
+    const requireValue = () => {
+      if (value.trim().length === 0) return "this field require";
+      return "";
+    };
+    const caseOb = {
+      answer_detail: requireValue,
+      question_detail: requireValue,
+      explain_detail: requireValue,
+      groupId: () => {
+        const groupId = appSettings
+          .map("groupCard")((item) => item.entities)
+          .get();
+        console.log(value, groupId);
+        if (value in groupId) return "";
+        return "group is require";
+      },
+    };
+
+    if (!(type in caseOb)) throw new Error("type not correct");
+    return caseOb[type as keyof typeof caseOb]();
   }
   render() {
     return html`
@@ -124,6 +153,7 @@ export class CreateFastCard extends BaseElement {
                 (e.currentTarget as HTMLInputElement).value
               ))}"
           >
+            <option value="-1">Please select group card</option>
             ${appSettings
               .map("groupCard")((item) =>
                 item.ids.map((id: number) => item.entities[id])
@@ -137,7 +167,7 @@ export class CreateFastCard extends BaseElement {
           </select>
           <p class="text-red-400 font-semibold text-sm mb-2">
             ${this.isFirstSubmit
-              ? this.validate(this.question_detail, Fields.question_detail)
+              ? this.validate(this.groupId.toString(), "groupId")
               : ""}
           </p>
         </div>

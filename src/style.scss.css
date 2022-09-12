@@ -27,7 +27,7 @@
   }
 
   .input {
-    @apply w-full bg-primary rounded-md px-4 py-1.5 shadow-sm shadow-slate-700 outline-none;
+    @apply w-full bg-primary rounded-md px-2 py-1.5 shadow-sm shadow-slate-700 outline-none;
     box-shadow: var(--shadow-block-down), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
       var(--tw-shadow);
 

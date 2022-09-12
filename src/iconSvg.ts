@@ -1,6 +1,6 @@
 import { css } from "lit-element";
 import { html, LitElement, TemplateResult } from "lit";
-import { customElement, customElement } from "lit/decorators.js";
+import { customElement } from "lit/decorators.js";
 
 class IconBase extends LitElement {
   iconWidth = 0;
@@ -17,7 +17,6 @@ class IconBase extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    const baseFontSize = 16;
     this.style.fill = "currentColor";
     this.style.display = "inline-block";
     console.log(this.iconWidth / this.iconHeight);

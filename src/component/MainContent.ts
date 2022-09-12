@@ -1,7 +1,7 @@
 import { MAIN_PAGE } from "./../constant";
 import { appSettings } from "./../app/AppSettings";
 import { html } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement } from "lit/decorators.js";
 import { BaseElement } from "./../BaseElement";
 
 import "./LoginForm";
