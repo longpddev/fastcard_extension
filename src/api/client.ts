@@ -39,8 +39,8 @@ const createMethod = async (
           "Content-Type": "application/json",
         },
   });
-  let isOk = result.ok;
-  console.log(result);
+  let isOk = result.ok || [200, 201].includes(result.status);
+  console.log(isOk);
   result = await result.json();
 
   if (!isOk) {
