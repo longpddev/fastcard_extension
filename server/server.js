@@ -85,8 +85,9 @@ app.get("/userscript", async (req, res) => {
       })
       // Your code here...
 
-      ${content}
+      
   })();
+  ${content}
   `);
 });
 
