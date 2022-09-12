@@ -1,11 +1,10 @@
-import { MAIN_PAGE } from "./../constant";
+import { homePage, MAIN_PAGE } from "./../constant";
 import { appSettings } from "./../app/AppSettings";
 import { html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { BaseElement } from "./../BaseElement";
 
 import "./LoginForm";
-import { homePage } from "../api/client";
 @customElement("main-content")
 export class MainContent extends BaseElement {
   observerIsLogin = true;

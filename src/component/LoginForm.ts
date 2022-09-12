@@ -1,6 +1,6 @@
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { BreakPoint } from "../constant";
+import { BreakPoint, signUp } from "../constant";
 import { BaseElement } from "./../BaseElement";
 import { fetchLogin } from "../api/point";
 
@@ -11,8 +11,8 @@ enum Fields {
 
 @customElement("login-form")
 export class LoginForm extends BaseElement {
-  @property() email = "email@gmail.com";
-  @property() password = "admin123";
+  @property() email = "";
+  @property() password = "";
   @property() isFirstSubmit = false;
   @property() isLoading = false;
   observerBreakPoint = true;
@@ -107,6 +107,11 @@ export class LoginForm extends BaseElement {
                 ? this.validate(this.password, Fields.password)
                 : ""}
             </p>
+          </div>
+          <div class="flex">
+            <a href="${signUp}" target="_blank" class="ml-auto"
+              >or, create account</a
+            >
           </div>
           <div class="flex my-4">
             <button class="button text-green-400 mx-auto flex items-center">

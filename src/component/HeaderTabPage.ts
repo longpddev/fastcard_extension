@@ -1,9 +1,12 @@
-import { appSettings } from "./../app/AppSettings";
+import { appSettings, token } from "./../app/AppSettings";
 import { html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { MAIN_PAGE } from "../constant";
 import { BaseElement } from "./../BaseElement";
 
+function logout() {
+  token.set("");
+}
 @customElement("header-tab-page")
 export class HeaderTabPage extends BaseElement {
   @property() page: MAIN_PAGE = MAIN_PAGE.home;
@@ -43,6 +46,14 @@ export class HeaderTabPage extends BaseElement {
               : "hover:border-slate-600"}"
           >
             Create card
+          </button>
+        </li>
+        <li>
+          <button
+            @click="${() => logout()}"
+            class="px-4 py-1 border-b-2 border-transparent opacity-50"
+          >
+            Logout
           </button>
         </li>
       </ul>

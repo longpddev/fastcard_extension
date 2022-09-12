@@ -41,6 +41,8 @@ app.get("/userscript", (req, res) => {
   
   (function () {
       "use strict";
+      const host = ${host}:${port};
+      if(unsafeWindow.location.host === host) return;
       window.fetchAPI = GM_fetch;
       window.setStorageValue = GM_setValue;
       window.getStorageValue = GM_getValue;
@@ -63,7 +65,7 @@ app.get("/userscript", (req, res) => {
   
       GM_xmlhttpRequest({
           method: "GET",
-          url: "${host}:${port}",
+          url: host,
           onload: (data) => {
               eval(data.responseText);
           },
