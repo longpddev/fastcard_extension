@@ -33,13 +33,9 @@ export class LoginForm extends BaseElement {
     this.emitter.emit("login", { email: this.email, password: this.password });
     this.isLoading = true;
 
-    fetchLogin(this.email, this.password)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    fetchLogin(this.email, this.password).catch((e) => {
+      console.error(e);
+    });
   }
   bindEmitter(): void {
     super.bindEmitter();

@@ -1,8 +1,10 @@
+import { MAIN_PAGE } from "./../constant";
 import { TinyEmitter } from "tiny-emitter";
 import { Maybe } from "../common";
 
 const appContext: any = {
   isLogin: false,
+  mainPage: MAIN_PAGE.home,
 };
 
 export const appSettings = {
@@ -24,6 +26,13 @@ export const appSettings = {
     const maybe = new Maybe(this.get(key));
     return (cb: (i: any) => any) => {
       return maybe.run(cb);
+    };
+  },
+
+  map(key: string) {
+    const maybe = new Maybe(this.get(key));
+    return (cb: (i: any) => any) => {
+      return maybe.map(cb);
     };
   },
 };

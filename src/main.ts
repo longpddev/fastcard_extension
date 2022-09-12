@@ -18,6 +18,8 @@ import "./component/TestElement";
 import "./component/HeaderElement";
 import "./component/SpanWidth";
 import "./component/MainContent";
+import "./component/HeaderTabPage";
+import "./component/CreateFastCard";
 // end list component
 declare global {
   interface Window {
@@ -51,7 +53,7 @@ export class Main extends LitElement {
     this.style.position = "fixed";
     this.style.width = "100%";
     this.style.zIndex = "100000";
-    this.setMaxWidth(576);
+    this.setMaxWidth(375);
   }
 
   bindEmitter() {

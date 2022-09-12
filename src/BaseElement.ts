@@ -53,11 +53,15 @@ export class BaseElement extends LitElement {
     appSettings.emitter.on("isLoginChange", this.handleIdLogin);
   }
 
+  unbindEmitter() {
+    this.emitter.off("breakPoint", this.handleBreakPoint);
+    appSettings.emitter.off("isLoginChange", this.handleIdLogin);
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    this.emitter.off("breakPoint", this.handleBreakPoint);
-    appSettings.emitter.off("isLoginChange", this.handleIdLogin);
+    this.unbindEmitter();
   }
 
   protected createRenderRoot(): Element | ShadowRoot {

@@ -37,7 +37,7 @@ export class Maybe {
     let result = value;
     if (value instanceof Maybe) result = value.get();
     if (!Array.isArray(result)) result = [result];
-
+    console.log(result);
     this.data = result;
   }
   isNotNil() {
@@ -51,10 +51,12 @@ export class Maybe {
   }
 
   map(cb: (i: any, index?: number) => any) {
+    if (this.data.length === 1) return new Maybe(cb(this.get(), 0));
     return new Maybe(this.data.map(cb));
   }
 
   run(cb: (i: any) => any) {
-    return new Maybe(cb(this.get()));
+    this.map(cb);
+    return this;
   }
 }

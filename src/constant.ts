@@ -3,3 +3,8 @@ export enum BreakPoint {
   "md" = 480,
   "lg" = 768,
 }
+
+export enum MAIN_PAGE {
+  home = "homePage",
+  addCard = "addCardPage",
+}

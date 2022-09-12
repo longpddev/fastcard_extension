@@ -12,6 +12,7 @@ export async function fetchLogin(email: string, password: string) {
 
   appSettings.set("userSettings", result.data.user.settings);
   token.set(result.data.token);
+  appSettings.emitter.emit("fetchLoginDone");
   return result.data;
 }
 
@@ -19,16 +20,26 @@ export async function fetGetUserInfo() {
   const result = await clientAuth.GET("/auth/user-info");
 
   appSettings.set("userSettings", result.data.settings);
+  appSettings.emitter.emit("fetGetUserInfoDone");
   return result.data;
 }
 
 export async function fetchGetGroupCard() {
-  return (await clientAuth.GET("/group-card")).data;
+  const result = (await clientAuth.GET("/group-card")).data;
+
+  appSettings.set("groupCard", {
+    ids: result.rows.map((item: any) => item.id),
+    entities: result.rows.reduce((acc: any, item: any) => {
+      acc[item.id] = item;
+      return acc;
+    }, {}),
+  });
+  return result;
 }
 
 export async function fetchGetCardLearnToday() {
   const groupCardIds = appSettings
-    .run("groupCard")((item) => item.id)
+    .map("groupCard")((item) => item.ids)
     .get();
   const settings = appSettings.get("userSettings");
   if (groupCardIds.length === 0)
@@ -53,5 +64,14 @@ export async function fetchGetCardLearnToday() {
       };
     })
   );
+  console.log(result);
+  appSettings.set("cardLearnToday", result);
   return result;
+}
+
+export async function fetchMainDataWhenLogin() {
+  await fetchGetGroupCard();
+  await fetchGetCardLearnToday();
+
+  appSettings.emitter.emit("fetchMainDataWhenLoginDone");
 }
