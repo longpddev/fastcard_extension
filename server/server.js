@@ -59,7 +59,7 @@ app.get("/userscript", async (req, res) => {
   // @grant        GM_getValue
   // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
   // ==/UserScript==
-  ${content}
+
   (function () {
       "use strict";
       const host = "${host}";
@@ -83,15 +83,9 @@ app.get("/userscript", async (req, res) => {
         fastCard.setPosition({ top: 100, left: 100 });
         fastCard.setShow(true);
       })
-  
-      GM_xmlhttpRequest({
-          method: "GET",
-          url: host,
-          onload: (data) => {
-              eval(data.responseText);
-          },
-      });
       // Your code here...
+
+      ${content}
   })();
   `);
 });
