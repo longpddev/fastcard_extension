@@ -40,6 +40,7 @@ const createMethod = async (
         },
   });
   let isOk = result.ok;
+  console.log(result);
   result = await result.json();
 
   if (!isOk) {
