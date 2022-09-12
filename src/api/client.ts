@@ -8,12 +8,11 @@ export const hostApi = "http://139.162.50.214:6969";
 export const baseUrl = `${hostApi}/api/v1`;
 declare global {
   interface Window {
-    GM_fetch: any;
+    fetchAPI: any;
   }
 }
 
-const fetchAPI = "GM_fetch" in window ? window.GM_fetch : fetch;
-console.log("GM_fetch", "GM_fetch" in window);
+!("GM_fetch" in window) && (window.fetchAPI = fetch);
 const createMethod = async (
   point: string,
   method: string,
