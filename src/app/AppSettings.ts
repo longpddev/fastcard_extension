@@ -37,7 +37,7 @@ export const appSettings = {
   },
 };
 
-if (!("getValue" in window && "setValue" in window)) {
+if (!("getStorageValue" in window && "setStorageValue" in window)) {
   window.setStorageValue = (name, value) => {
     localStorage.setItem(name + "FastCard", value);
   };
