@@ -61,7 +61,7 @@ app.get("/userscript", async (req, res) => {
 
   (function () {
       "use strict";
-      const host = "${host}";
+      const host = "${host}:3000";
       if(unsafeWindow.location.host === host) return;
       window.fetchAPI = GM_fetch;
       window.setStorageValue = GM_setValue;
