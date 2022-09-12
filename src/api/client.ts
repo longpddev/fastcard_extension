@@ -6,6 +6,14 @@ interface IResponse extends Response {
 
 export const hostApi = "http://139.162.50.214:6969";
 export const baseUrl = `${hostApi}/api/v1`;
+declare global {
+  interface Window {
+    GM_fetch: any;
+  }
+}
+
+const fetchAPI = "GM_fetch" in window ? GM_fetch : fetch;
+
 const createMethod = async (
   point: string,
   method: string,
@@ -21,7 +29,7 @@ const createMethod = async (
     if (isObject) return JSON.stringify(body);
     return body;
   };
-  let result = await fetch(`${baseUrl}${point}`, {
+  let result = await fetchAPI(`${baseUrl}${point}`, {
     method,
     body: getBody(),
     mode: "cors",
