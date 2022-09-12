@@ -42,7 +42,6 @@ export class ShortIconAddCard extends LitElement {
 
     this.showEl(true);
     const position = this.getPositionSelect(select);
-    console.log(position);
     const { innerWidth: width } = window;
     const padding = 5;
     let top = position.top + padding;
