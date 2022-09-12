@@ -13,7 +13,7 @@ export class ShortIconAddCard extends LitElement {
   }
   connectedCallback(): void {
     super.connectedCallback();
-    this.style.display = "inline-flex";
+    this.style.display = "none";
     this.style.position = "fixed";
     this.style.zIndex = "10000";
 
