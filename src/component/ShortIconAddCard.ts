@@ -17,13 +17,13 @@ export class ShortIconAddCard extends LitElement {
     this.style.position = "fixed";
     this.style.zIndex = "10000";
 
-    document.addEventListener("pointerup", this.handlePointerup);
+    document.addEventListener("selectionchange", this.handlePointerup);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    document.removeEventListener("pointerup", this.handlePointerup);
+    document.removeEventListener("selectionchange", this.handlePointerup);
   }
 
   showEl(status: boolean) {
@@ -42,17 +42,18 @@ export class ShortIconAddCard extends LitElement {
 
     this.showEl(true);
     const position = this.getPositionSelect(select);
-
+    console.log(position);
     const { innerWidth: width } = window;
-    let top = position.top;
-    let left = position.right;
+    const padding = 5;
+    let top = position.top + padding;
+    let left = position.right + padding;
 
-    if (position.right + this.offsetWidth > width) {
+    if (position.right + padding + this.offsetWidth > width) {
       left = width - this.offsetWidth;
       top = position.bottom;
     }
 
-    if (position.top - this.offsetHeight > 0) {
+    if (position.top - padding - this.offsetHeight > 0) {
       top = position.top - this.offsetHeight;
     }
 

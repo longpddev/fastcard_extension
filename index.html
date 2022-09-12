@@ -17,6 +17,9 @@
 
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener('selectionchange', () => {
+        console.log(document.getSelection());
+      });
       const mainEl = document.createElement("fast-card-body");
       const iconAddCard = document.createElement("short-icon-add-card");
       const button = document.createElement("button");
