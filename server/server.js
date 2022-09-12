@@ -6,21 +6,42 @@ const port = 6600;
 const host = "http://139.162.50.214";
 app.use(cors());
 app.use("/public", express.static(__dirname + "/public"));
-
-app.get("/", (req, res) => {
+function getPageFileJs() {
   const path = __dirname.split("/");
   const parentPath = path.slice(0, path.length - 1).join("/");
 
   const files = fs.readdirSync(parentPath + "/dist/assets");
   const file = files.filter((item) => /(.js)$/.test(item))[0];
   if (file) {
-    res.sendFile(parentPath + `/dist/assets/` + file);
+    return parentPath + `/dist/assets/` + file;
+  }
+
+  return null;
+}
+
+async function getContextFileJs() {
+  const filePath = getPageFileJs();
+  if (!filePath) return "";
+
+  return new Promise((res, rej) => {
+    fs.readFile(filePath, "utf8", function (err, data) {
+      if (err) rej(err);
+      // console.log(data);
+      res(data);
+    });
+  });
+}
+app.get("/", (req, res) => {
+  const filePath = getPageFileJs();
+  if (filePath) {
+    res.sendFile(filePath);
     return;
   }
   res.send("");
 });
 
-app.get("/userscript", (req, res) => {
+app.get("/userscript", async (req, res) => {
+  const content = await getContextFileJs();
   res.send(`
   // ==UserScript==
   // @name         New Userscript
@@ -38,10 +59,10 @@ app.get("/userscript", (req, res) => {
   // @grant        GM_getValue
   // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
   // ==/UserScript==
-  
+  ${content}
   (function () {
       "use strict";
-      const host = "${host}:${port}";
+      const host = "${host}";
       if(unsafeWindow.location.host === host) return;
       window.fetchAPI = GM_fetch;
       window.setStorageValue = GM_setValue;
