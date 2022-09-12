@@ -30,3 +30,31 @@ export const isValidUrl = (url: string) => {
 };
 
 export const encodePassword = (password: string) => MD5(password).toString();
+
+export class Maybe {
+  data: Array<any>;
+  constructor(value: Maybe | any) {
+    let result = value;
+    if (value instanceof Maybe) result = value.get();
+    if (!Array.isArray(result)) result = [result];
+
+    this.data = result;
+  }
+  isNotNil() {
+    return (
+      this.data !== undefined && this.data !== null && this.data.length > 0
+    );
+  }
+
+  get() {
+    return this.data.length === 1 ? this.data[0] : this.data;
+  }
+
+  map(cb: (i: any, index?: number) => any) {
+    return new Maybe(this.data.map(cb));
+  }
+
+  run(cb: (i: any) => any) {
+    return new Maybe(cb(this.get()));
+  }
+}

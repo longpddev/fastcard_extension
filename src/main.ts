@@ -9,6 +9,10 @@ import { nearest } from "./common";
 import "./iconSvg";
 // end import icon
 
+// setup app
+import "./app/setup";
+// end setup app
+
 // list component
 import "./component/TestElement";
 import "./component/HeaderElement";

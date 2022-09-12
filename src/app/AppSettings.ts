@@ -1,43 +1,9 @@
 import { TinyEmitter } from "tiny-emitter";
-
-declare global {
-  interface Window {
-    appSettings: any;
-    appContext: any;
-  }
-}
+import { Maybe } from "../common";
 
 const appContext: any = {
   isLogin: false,
 };
-
-class Maybe {
-  data: Array<any>;
-  constructor(value: Maybe | any) {
-    let result = value;
-    if (value instanceof Maybe) result = value.get();
-    if (!Array.isArray(result)) result = [result];
-
-    this.data = result;
-  }
-  isNotNil() {
-    return (
-      this.data !== undefined && this.data !== null && this.data.length > 0
-    );
-  }
-
-  get() {
-    return this.data.length === 1 ? this.data[0] : this.data;
-  }
-
-  map(cb: (i: any, index?: number) => any) {
-    return new Maybe(this.data.map(cb));
-  }
-
-  run(cb: (i: any) => any) {
-    return new Maybe(cb(this.get()));
-  }
-}
 
 export const appSettings = {
   emitter: new TinyEmitter(),
@@ -62,10 +28,18 @@ export const appSettings = {
   },
 };
 
-appSettings.emitter.on("tokenChange", () => {
-  console.log("tokenChange");
-  const token = appSettings.get("token");
+if (!("getValue" in window && "setValue" in window)) {
+  window.setStorageValue = (name, value) => {
+    localStorage.setItem(name + "FastCard", value);
+  };
+  window.getStorageValue = (name, defaultValue) => {
+    return localStorage.getItem(name + "FastCard") || defaultValue;
+  };
+}
 
+appSettings.emitter.on("tokenChange", () => {
+  const token = appSettings.get("token");
+  window.setStorageValue("token", token);
   if (token && !appSettings.get("isLogin")) {
     appSettings.set("isLogin", true);
   } else {

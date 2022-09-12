@@ -13,6 +13,7 @@ declare global {
 }
 
 !("fetchAPI" in window) && (window.fetchAPI = fetch);
+
 console.log(window.fetchAPI);
 const createMethod = async (
   point: string,
@@ -40,9 +41,8 @@ const createMethod = async (
         },
   });
   let isOk = result.ok || [200, 201].includes(result.status);
-  console.log(isOk);
   result = await result.json();
-
+  console.log({ result, isOk });
   if (!isOk) {
     return Promise.reject(result);
   }

@@ -15,6 +15,13 @@ export async function fetchLogin(email: string, password: string) {
   return result.data;
 }
 
+export async function fetGetUserInfo() {
+  const result = await clientAuth.GET("/auth/user-info");
+
+  appSettings.set("userSettings", result.data.settings);
+  return result.data;
+}
+
 export async function fetchGetGroupCard() {
   return (await clientAuth.GET("/group-card")).data;
 }
