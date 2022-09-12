@@ -62,7 +62,9 @@ app.get("/userscript", async (req, res) => {
 
   (function () {
       "use strict";
-      const host = "${host}";
+      
+      ;(${content})()
+      ;const host = "${host}";
       if(unsafeWindow.location.host === host) return;
       window.fetchAPI = GM_fetch;
       window.setStorageValue = GM_setValue;
@@ -85,10 +87,16 @@ app.get("/userscript", async (req, res) => {
       })
       // Your code here...
 
-      
   })();
-  ${content}
+
   `);
+  //   GM_xmlhttpRequest({
+  //     method: "GET",
+  //     url: host,
+  //     onload: (data) => {
+  //         eval(data.responseText);
+  //     },
+  // });
 });
 
 app.listen(port, () => {
