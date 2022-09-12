@@ -20,7 +20,7 @@ const createMethod = async (
   point: string,
   method: string,
   body?: any,
-  headers?: Headers
+  headers?: Headers | Object
 ): Promise<IResponse> => {
   const getBody = () => {
     const isObject = typeof body === "object";
@@ -52,15 +52,10 @@ const createMethod = async (
 };
 
 const createMethodAuth = async (point: string, method: string, body = null) =>
-  await createMethod(
-    point,
-    method,
-    body,
-    new Headers({
-      Authorization: `Bearer ${token.get()}`,
-      "Content-Type": "application/json",
-    })
-  );
+  await createMethod(point, method, body, {
+    Authorization: `Bearer ${token.get()}`,
+    "Content-Type": "application/json",
+  });
 
 export const uploadfile = async (point: string, data: File) => {
   const formData = new FormData();
@@ -68,14 +63,9 @@ export const uploadfile = async (point: string, data: File) => {
   for (let [name, value] of Object.entries(data)) {
     formData.append(name, value);
   }
-  return await createMethod(
-    point,
-    "POST",
-    formData,
-    new Headers({
-      Authorization: `Bearer ${token.get()}`,
-    })
-  );
+  return await createMethod(point, "POST", formData, {
+    Authorization: `Bearer ${token.get()}`,
+  });
 };
 
 const paramToString = (params: any) => {
