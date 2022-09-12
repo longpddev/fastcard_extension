@@ -71,9 +71,9 @@ app.get("/userscript", async (req, res) => {
       const script = document.createElement("script");
       const fastCard = document.createElement("fast-card-body");
       const iconAddCard = document.createElement("short-icon-add-card");
-      document.body.append(iconAddCard);
-      document.body.append(fastCard);
-      document.body.append(script);
+      document.querySelector('html').append(iconAddCard);
+      document.querySelector('html').append(fastCard);
+      document.querySelector('html').append(script);
   
       document.body.addEventListener("fastCardLoaded", () => {
   

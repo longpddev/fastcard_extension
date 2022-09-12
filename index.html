@@ -20,9 +20,9 @@
       const mainEl = document.createElement("fast-card-body");
       const iconAddCard = document.createElement("short-icon-add-card");
       const button = document.createElement("button");
-      document.body.append(button);
-      document.body.append(mainEl);
-      document.body.append(iconAddCard);
+      document.querySelector('html').append(button);
+      document.querySelector('html').append(mainEl);
+      document.querySelector('html').append(iconAddCard);
       button.innerHTML = "click";
       button.classList.add("button");
       button.addEventListener("click", () => {
