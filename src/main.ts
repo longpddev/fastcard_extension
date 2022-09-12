@@ -87,13 +87,6 @@ export class Main extends LitElement {
       }
     });
   }
-  static get styles() {
-    return [
-      css`
-        ${unsafeCSS(style)}
-      `,
-    ];
-  }
 
   setShow(status: boolean) {
     if (status) {
@@ -170,24 +163,27 @@ export class Main extends LitElement {
   render() {
     if (!this.isShow) return html``;
 
-    return html` <div
-      class="fastcard-body rounded-md relative border border-t-0 overflow-hidden border-slate-500 before:absolute before:top-0 before:left-0 before:w-full before:h-[2px] before:bg-sky-400"
-    >
-      <span-width
-        position="left"
-        class="absolute top-0 left-0 w-1 z-10 bg-sky-400 opacity-0 hover:opacity-50 transition-all block h-full"
+    return html` <style>
+        ${style}
+      </style>
+      <div
+        class="fastcard-body rounded-md relative border border-t-0 overflow-hidden border-slate-500 before:absolute before:top-0 before:left-0 before:w-full before:h-[2px] before:bg-sky-400"
       >
-      </span-width>
-      <header-element
-        class="block w-full select-none bg-slate-800 cursor-move"
-      ></header-element>
-      <main-content></main-content>
-      <span-width
-        position="right"
-        class="absolute top-0 right-0 w-1 z-10 bg-sky-400 block opacity-0 hover:opacity-50 transition-all h-full"
-      >
-      </span-width>
-    </div>`;
+        <span-width
+          position="left"
+          class="absolute top-0 left-0 w-1 z-10 bg-sky-400 opacity-0 hover:opacity-50 transition-all block h-full"
+        >
+        </span-width>
+        <header-element
+          class="block w-full select-none bg-slate-800 cursor-move"
+        ></header-element>
+        <main-content></main-content>
+        <span-width
+          position="right"
+          class="absolute top-0 right-0 w-1 z-10 bg-sky-400 block opacity-0 hover:opacity-50 transition-all h-full"
+        >
+        </span-width>
+      </div>`;
   }
 }
 

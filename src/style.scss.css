@@ -3,11 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  *,
   html,
+  body,
   :root {
-    font-size: 14px;
-  }
-  .fastcard-body {
+    font-size: 12px;
+
+    --shadow-block-down: inset 0 1px 1.5px 0.2px theme("colors.black");
+    --shadow-block-up: inset 0 1px 1.5px 0.2px theme("colors.slate.600");
     font-weight: normal;
     font-family: Roboto, sans-serif;
     -webkit-text-size-adjust: none;
@@ -17,10 +20,9 @@
 
     --header-height: 60px;
     overflow-x: hidden;
+  }
+  .fastcard-body {
     @apply text-white bg-primary;
-
-    --shadow-block-down: inset 0 1px 1.5px 0.2px theme("colors.black");
-    --shadow-block-up: inset 0 1px 1.5px 0.2px theme("colors.slate.600");
   }
   th,
   td {
