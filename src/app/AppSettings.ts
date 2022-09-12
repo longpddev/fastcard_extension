@@ -48,7 +48,7 @@ if (!("getValue" in window && "setValue" in window)) {
 
 appSettings.emitter.on("tokenChange", () => {
   const token = appSettings.get("token");
-  window.setStorageValue("token", token);
+  window.setStorageValue("token", token || "");
   if (token && !appSettings.get("isLogin")) {
     appSettings.set("isLogin", true);
   } else {
@@ -62,7 +62,7 @@ export const token = {
   },
 
   set(value: string) {
-    appSettings.set("token", value);
+    appSettings.set("token", value || "");
   },
 };
 

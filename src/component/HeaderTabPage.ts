@@ -20,7 +20,7 @@ export class HeaderTabPage extends BaseElement {
 
   render() {
     return html`
-      <ul class="flex border-b border-slate-700 mt-2">
+      <ul class="flex border-b border-slate-700 mt-[2px]">
         <li>
           <button
             @click="${() => appSettings.set("mainPage", MAIN_PAGE.home)}"

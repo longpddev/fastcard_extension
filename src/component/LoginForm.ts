@@ -65,54 +65,60 @@ export class LoginForm extends BaseElement {
 
   render() {
     return html`
-      <h2 class="text-center text-2xl mb-2 mt-4">Sign in</h2>
-      <form action="" @submit="${this.handleSubmit}">
-        <div
-          class="flex mb-2 ${this.breakPoint > BreakPoint.md
-            ? " items-center gap-x-4"
-            : "flex-wrap gap-y-2"}"
-        >
-          <label for="">Email: </label>
-          <input
-            type="email"
-            class="input"
-            .value="${this.email}"
-            @input="${(e: InputEvent) =>
-              (this.email = (e.currentTarget as HTMLInputElement).value)}"
-          />
-          <p class="text-red-400 font-semibold text-sm mb-2">
-            ${this.isFirstSubmit ? this.validate(this.email, Fields.email) : ""}
-          </p>
-        </div>
-        <div
-          class="flex mb-2 ${this.breakPoint > BreakPoint.md
-            ? " items-center gap-x-4"
-            : "flex-wrap gap-y-2"}"
-        >
-          <label for="">Password: </label>
-          <input
-            type="password"
-            class="input"
-            .value="${this.password}"
-            @input="${(e: InputEvent) =>
-              (this.password = (e.currentTarget as HTMLInputElement).value)}"
-          />
-          <p class="text-red-400 font-semibold text-sm mb-2">
-            ${this.isFirstSubmit
-              ? this.validate(this.password, Fields.password)
-              : ""}
-          </p>
-        </div>
-        <div class="flex my-4">
-          <button class="button text-green-400 mx-auto flex items-center">
-            <span>Send</span>
-            ${this.isLoading
-              ? html`<span class="ml-2 inline-flex"></span
-                  ><icon-loading class="animate-spin"></icon-loading>`
-              : ""}
-          </button>
-        </div>
-      </form>
+      <div class="px-4">
+        <h2 class="text-center text-xl font-medium text-sky-300 mt-2">
+          Sign in
+        </h2>
+        <form action="" @submit="${this.handleSubmit}">
+          <div
+            class="flex mb-2 ${this.breakPoint > BreakPoint.md
+              ? " items-center gap-x-4"
+              : "flex-wrap gap-y-2"}"
+          >
+            <label for="">Email: </label>
+            <input
+              type="email"
+              class="input"
+              .value="${this.email}"
+              @input="${(e: InputEvent) =>
+                (this.email = (e.currentTarget as HTMLInputElement).value)}"
+            />
+            <p class="text-red-400 font-semibold text-sm mb-2">
+              ${this.isFirstSubmit
+                ? this.validate(this.email, Fields.email)
+                : ""}
+            </p>
+          </div>
+          <div
+            class="flex mb-2 ${this.breakPoint > BreakPoint.md
+              ? " items-center gap-x-4"
+              : "flex-wrap gap-y-2"}"
+          >
+            <label for="">Password: </label>
+            <input
+              type="password"
+              class="input"
+              .value="${this.password}"
+              @input="${(e: InputEvent) =>
+                (this.password = (e.currentTarget as HTMLInputElement).value)}"
+            />
+            <p class="text-red-400 font-semibold text-sm mb-2">
+              ${this.isFirstSubmit
+                ? this.validate(this.password, Fields.password)
+                : ""}
+            </p>
+          </div>
+          <div class="flex my-4">
+            <button class="button text-green-400 mx-auto flex items-center">
+              <span>Send</span>
+              ${this.isLoading
+                ? html`<span class="ml-2 inline-flex"></span
+                    ><icon-loading class="animate-spin"></icon-loading>`
+                : ""}
+            </button>
+          </div>
+        </form>
+      </div>
     `;
   }
 }

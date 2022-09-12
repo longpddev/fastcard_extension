@@ -20,6 +20,8 @@ import "./component/SpanWidth";
 import "./component/MainContent";
 import "./component/HeaderTabPage";
 import "./component/CreateFastCard";
+import "./component/ShortIconAddCard";
+import { appSettings } from "./app/AppSettings";
 // end list component
 declare global {
   interface Window {
@@ -75,6 +77,14 @@ export class Main extends LitElement {
         this.setPosition({ left });
       }
     );
+
+    appSettings.emitter.on("showFastCard", (status: boolean) => {
+      if (status === true) {
+        this.setShow(true);
+      } else {
+        this.setShow(false);
+      }
+    });
   }
   static get styles() {
     return [
@@ -160,7 +170,7 @@ export class Main extends LitElement {
     if (!this.isShow) return html``;
 
     return html` <div
-      class="fastcard-body rounded-md relative px-3 border border-slate-500"
+      class="fastcard-body rounded-md relative border border-t-0 overflow-hidden border-slate-500 before:absolute before:top-0 before:left-0 before:w-full before:h-[2px] before:bg-sky-400"
     >
       <span-width
         position="left"
@@ -168,7 +178,7 @@ export class Main extends LitElement {
       >
       </span-width>
       <header-element
-        class="block w-full border-b select-none border-slate-700 cursor-move"
+        class="block w-full select-none bg-slate-800 cursor-move"
       ></header-element>
       <main-content></main-content>
       <span-width

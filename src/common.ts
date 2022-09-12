@@ -60,3 +60,7 @@ export class Maybe {
     return this;
   }
 }
+
+export function getSelect() {
+  return window.getSelection();
+}

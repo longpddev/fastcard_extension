@@ -1,5 +1,6 @@
 import { appSettings, token } from "../app/AppSettings";
 import { encodePassword } from "../common";
+import { CARD_TYPE } from "../constant";
 import client, { clientAuth } from "./client";
 
 export async function fetchLogin(email: string, password: string) {
@@ -74,4 +75,46 @@ export async function fetchMainDataWhenLogin() {
   await fetchGetCardLearnToday();
 
   appSettings.emitter.emit("fetchMainDataWhenLoginDone");
+}
+
+interface IFetchCreateCard {
+  groupId: number;
+  question_detail: string;
+  answer_detail: string;
+  explain_detail: string;
+}
+export async function fetchCreateCard({
+  groupId,
+  question_detail,
+  answer_detail,
+  explain_detail,
+}: IFetchCreateCard) {
+  const result = await clientAuth.POST("/card", {
+    body: {
+      info: {
+        cardGroupId: groupId,
+      },
+      cardQuestion: {
+        imageId: null,
+        content: question_detail,
+        type: CARD_TYPE.question,
+        cardGroupId: groupId,
+      },
+      cardAnswer: {
+        imageId: null,
+        content: answer_detail,
+        type: CARD_TYPE.answer,
+        cardGroupId: groupId,
+      },
+      cardExplain: {
+        imageId: null,
+        content: explain_detail,
+        type: CARD_TYPE.explain,
+        cardGroupId: groupId,
+      },
+    },
+  });
+
+  appSettings.emitter.emit("fetchCreateCardDone");
+  return result;
 }

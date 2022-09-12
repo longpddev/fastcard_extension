@@ -10,14 +10,19 @@
 
 <body>
   <div id="app"></div>
+  <p>Note: For your custom fields, you may encounter a "not allowed by Access-Control-Allow-Headers in preflight
+    response" exception when you send requests across domains. In this situation, you need to set up the
+    Access-Control-Allow-Headers in your response header at server side.</p>
   <script type="module" src="/src/main.ts"></script>
 
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
       const mainEl = document.createElement("fast-card-body");
+      const iconAddCard = document.createElement("short-icon-add-card");
       const button = document.createElement("button");
       document.body.append(button);
       document.body.append(mainEl);
+      document.body.append(iconAddCard);
       button.innerHTML = "click";
       button.classList.add("button");
       button.addEventListener("click", () => {

@@ -5,6 +5,7 @@ interface IResponse extends Response {
 }
 
 export const hostApi = "http://139.162.50.214:6969";
+export const homePage = "http://139.162.50.214:3000";
 export const baseUrl = `${hostApi}/api/v1`;
 declare global {
   interface Window {
