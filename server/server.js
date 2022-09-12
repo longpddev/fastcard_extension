@@ -63,7 +63,7 @@ app.get("/userscript", async (req, res) => {
   (function () {
       "use strict";
       
-      ;(${content})()
+      ${content}
       ;const host = "${host}";
       if(unsafeWindow.location.host === host) return;
       window.fetchAPI = GM_fetch;
