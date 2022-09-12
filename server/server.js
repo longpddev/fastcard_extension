@@ -41,7 +41,6 @@ app.get("/", (req, res) => {
 });
 
 app.get("/userscript", async (req, res) => {
-  const content = await getContextFileJs();
   res.send(`
   // ==UserScript==
   // @name         New Userscript
@@ -62,9 +61,7 @@ app.get("/userscript", async (req, res) => {
 
   (function () {
       "use strict";
-      
-      ${content}
-      ;const host = "${host}";
+      const host = "${host}";
       if(unsafeWindow.location.host === host) return;
       window.fetchAPI = GM_fetch;
       window.setStorageValue = GM_setValue;
@@ -86,17 +83,16 @@ app.get("/userscript", async (req, res) => {
         fastCard.setShow(true);
       })
       // Your code here...
-
+      GM_xmlhttpRequest({
+        method: "GET",
+        url: host,
+        onload: (data) => {
+            eval(data.responseText);
+        },
+    });
   })();
 
   `);
-  //   GM_xmlhttpRequest({
-  //     method: "GET",
-  //     url: host,
-  //     onload: (data) => {
-  //         eval(data.responseText);
-  //     },
-  // });
 });
 
 app.listen(port, () => {
