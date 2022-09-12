@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-const fetchAPI = "GM_fetch" in window ? GM_fetch : fetch;
+const fetchAPI = "GM_fetch" in window ? window.GM_fetch : fetch;
 console.log("GM_fetch", "GM_fetch" in window);
 const createMethod = async (
   point: string,
