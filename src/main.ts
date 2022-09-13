@@ -1,5 +1,5 @@
 import { BreakPoint } from "./constant";
-import { css, html, LitElement, unsafeCSS } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import style from "./style.scss.css";
 import { TinyEmitter } from "tiny-emitter";
