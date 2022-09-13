@@ -1,5 +1,5 @@
 import { BreakPoint } from "./constant";
-import { css, html, LitElement, unsafeCSS } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import style from "./style.scss.css";
 import { TinyEmitter } from "tiny-emitter";
@@ -34,6 +34,11 @@ export class Main extends LitElement {
   @property() isShow = false;
   emitter = new TinyEmitter();
   maxWidth = 0;
+  timerTransition = 0;
+  timerFocusout = 0;
+  @property() isPopupActive = false;
+  // 30s
+  timeCountUnActive = 30000
   position = {
     left: 0,
     top: 0,
@@ -47,6 +52,10 @@ export class Main extends LitElement {
   };
   constructor() {
     super();
+
+    this.setSizePopupWithAnimation = this.setSizePopupWithAnimation.bind(this)
+    this.handlePopupFocus = this.handlePopupFocus.bind(this)
+    this.handlePopupBlur = this.handlePopupBlur.bind(this)
   }
   connectedCallback(): void {
     super.connectedCallback();
@@ -55,8 +64,15 @@ export class Main extends LitElement {
     this.style.position = "fixed";
     this.style.width = "100%";
     this.style.zIndex = "100000";
+    this.style.overflow  = 'hidden'
+    this.style.borderRadius = '5px';
     this.setMaxWidth(375);
     this.setPosition({ left: 100, top: 100 });
+
+    // make popup focusable
+    this.tabIndex = 0
+    this.addEventListener('focus', this.handlePopupFocus)
+    this.addEventListener('blur', this.handlePopupBlur)
   }
 
   bindEmitter() {
@@ -73,7 +89,7 @@ export class Main extends LitElement {
       "changeMaxWidth",
       ({ width, left }: { width: number; left: number }) => {
         if (Number.isNaN(width) || Number.isNaN(left)) return;
-        if (width < 300) return;
+        if (width < 100) return;
         this.setMaxWidth(width);
         this.setPosition({ left });
       }
@@ -86,6 +102,8 @@ export class Main extends LitElement {
         this.setShow(false);
       }
     });
+
+    appSettings.emitter.on('setSizePopupWithAnimation', this.setSizePopupWithAnimation)
   }
 
   setShow(status: boolean) {
@@ -160,6 +178,45 @@ export class Main extends LitElement {
     }
   }
 
+  setSizePopupWithAnimation({ top, left, width, height }: { top?: number; left?: number; width: number; height: number }) {
+    this.setTransition();
+    this.style.height = height > 0 ? height + 'px' : ''
+    this.setPosition({top, left});
+    this.setMaxWidth(width);
+    appSettings.emitter.emit('setSizePopupWithAnimationDone')
+  }
+
+  setTransition() {
+    this.style.transition = 'all 300ms';
+
+    this.timerTransition = setTimeout(() => {
+      this.style.transition = ''
+    }, 300)
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('focus', this.handlePopupFocus)
+    this.removeEventListener('blur', this.handlePopupBlur)
+    appSettings.emitter.off('setSizePopupWithAnimation', this.setSizePopupWithAnimation)
+  }
+  handlePopupFocus () {
+    this.style.opacity = '1'
+    this.setTransition()
+    this.isPopupActive = true
+    appSettings.emitter.emit('popupActive')
+    clearTimeout(this.timerFocusout)
+  }
+  handlePopupBlur() {
+    clearTimeout(this.timerFocusout)
+    this.timerFocusout = setTimeout(() => {
+      this.isPopupActive = false
+      this.style.opacity = '.35'
+      this.setTransition()
+      appSettings.emitter.emit('popupUnActive')
+    }, this.timeCountUnActive)
+  }
+
   render() {
     if (!this.isShow) return html``;
 
@@ -167,7 +224,7 @@ export class Main extends LitElement {
         ${style}
       </style>
       <div
-        class="fastcard-body rounded-md relative border border-t-0 overflow-hidden border-slate-500 before:absolute before:top-0 before:left-0 before:w-full before:h-[2px] before:bg-sky-400"
+        class="fastcard-body relative border border-t-0 overflow-hidden ${this.isPopupActive ? 'border-sky-500' : "border-slate-500"}  before:absolute before:top-0 before:left-0 before:w-full before:h-[2px] before:bg-sky-400"
       >
         <span-width
           position="left"
