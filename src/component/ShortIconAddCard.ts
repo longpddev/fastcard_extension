@@ -16,6 +16,10 @@ export class ShortIconAddCard extends LitElement {
     this.style.display = "none";
     this.style.position = "fixed";
     this.style.zIndex = "10000";
+    this.style.setProperty('-webkit-user-select', 'none');
+    this.style.setProperty('-moz-user-select', 'none');
+    this.style.setProperty('-ms-user-select', 'none');
+    this.style.setProperty('user-select', 'none');
 
     document.addEventListener("selectionchange", this.handlePointerup);
   }
