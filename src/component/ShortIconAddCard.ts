@@ -56,9 +56,9 @@ export class ShortIconAddCard extends LitElement {
       top = position.bottom;
     }
 
-    if (position.top - padding - this.offsetHeight > 0) {
-      top = position.top - this.offsetHeight;
-    }
+    // if (position.top - padding - this.offsetHeight > 0) {
+    //   top = position.top - this.offsetHeight;
+    // }
 
     this.style.left = left + "px";
     this.style.top = top + "px";
