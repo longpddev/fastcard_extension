@@ -66,7 +66,7 @@ app.get("/userscript", async (req, res) => {
       window.fetchAPI = GM_fetch;
       window.setStorageValue = GM_setValue;
       window.getStorageValue = GM_getValue;
-  
+      unsafeWindow.app_logging = (status) => window.logging = status
       const script = document.createElement("script");
       const fastCard = document.createElement("fast-card-body");
       const iconAddCard = document.createElement("short-icon-add-card");

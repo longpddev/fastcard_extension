@@ -124,7 +124,6 @@ export class CreateFastCard extends BaseElement {
         const groupId = appSettings
           .map("groupCard")((item) => item.entities)
           .get();
-        console.log(value, groupId);
         if (value in groupId) return "";
         return "group is require";
       },

@@ -3,6 +3,7 @@ import MD5 from "crypto-js/md5";
 declare global {
   interface Window {
     nearest: any;
+    logging: boolean;
   }
 }
 
@@ -64,4 +65,10 @@ export class Maybe {
 
 export function getSelect() {
   return window.getSelection();
+}
+
+export function app_log(...argus: Array<any>) {
+  if (window.logging) {
+    console.log(...argus);
+  }
 }

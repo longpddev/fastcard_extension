@@ -1,6 +1,6 @@
 import { baseUrl, hostApi } from "../constant";
 import { token } from "./../app/AppSettings";
-import { isValidUrl } from "./../common";
+import { app_log, isValidUrl } from "./../common";
 interface IResponse extends Response {
   data: any;
 }
@@ -39,7 +39,8 @@ const createMethod = async (
   });
   let isOk = result.ok || [200, 201].includes(result.status);
   result = await result.json();
-  console.log({ result, isOk });
+  // console.log({ result, isOk });
+  app_log({ result, isOk });
   if (!isOk) {
     return Promise.reject(result);
   }

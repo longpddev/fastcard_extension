@@ -65,7 +65,6 @@ export async function fetchGetCardLearnToday() {
       };
     })
   );
-  console.log(result);
   appSettings.set("cardLearnToday", result);
   return result;
 }

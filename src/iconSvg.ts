@@ -19,7 +19,6 @@ class IconBase extends LitElement {
     super.connectedCallback();
     this.style.fill = "currentColor";
     this.style.display = "inline-block";
-    console.log(this.iconWidth / this.iconHeight);
     this.style.width = `${this.iconWidth / this.iconHeight}em`;
     this.style.height = "1em";
   }
