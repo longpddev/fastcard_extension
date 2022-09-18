@@ -110,16 +110,11 @@ export class Main extends LitElement {
   }
 
   setShow(status: boolean) {
-    if (status) {
-      this.animateEl.status = 1;
-    } else {
-      this.animateEl.status = -1;
-    }
-    if (!this.animateEl.isRun) {
-      this.animateEl.isRun = true;
-      this.animateEl.time = new Date().getTime();
-      this.animateRun();
-    }
+    this.style.opacity = status ? "1" : "0";
+    status && (this.isShow = status);
+    this.setTransition(() => {
+      !status && (this.isShow = status);
+    });
   }
   roundOpacity() {
     return this.animateEl.opacity <= 0 ? 0 : 100;
