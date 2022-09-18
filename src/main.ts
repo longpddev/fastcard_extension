@@ -38,7 +38,7 @@ export class Main extends LitElement {
   timerFocusout = 0;
   @property() isPopupActive = false;
   // 30s
-  timeCountUnActive = 30000
+  timeCountUnActive = 30000;
   position = {
     left: 0,
     top: 0,
@@ -53,9 +53,9 @@ export class Main extends LitElement {
   constructor() {
     super();
 
-    this.setSizePopupWithAnimation = this.setSizePopupWithAnimation.bind(this)
-    this.handlePopupFocus = this.handlePopupFocus.bind(this)
-    this.handlePopupBlur = this.handlePopupBlur.bind(this)
+    this.setSizePopupWithAnimation = this.setSizePopupWithAnimation.bind(this);
+    this.handlePopupFocus = this.handlePopupFocus.bind(this);
+    this.handlePopupBlur = this.handlePopupBlur.bind(this);
   }
   connectedCallback(): void {
     super.connectedCallback();
@@ -64,15 +64,15 @@ export class Main extends LitElement {
     this.style.position = "fixed";
     this.style.width = "100%";
     this.style.zIndex = "100000";
-    this.style.overflow  = 'hidden'
-    this.style.borderRadius = '5px';
+    this.style.overflow = "hidden";
+    this.style.borderRadius = "5px";
     this.setMaxWidth(375);
     this.setPosition({ left: 100, top: 100 });
 
     // make popup focusable
-    this.tabIndex = 0
-    this.addEventListener('focus', this.handlePopupFocus)
-    this.addEventListener('blur', this.handlePopupBlur)
+    this.tabIndex = 0;
+    this.addEventListener("focus", this.handlePopupFocus);
+    this.addEventListener("blur", this.handlePopupBlur);
   }
 
   bindEmitter() {
@@ -103,7 +103,10 @@ export class Main extends LitElement {
       }
     });
 
-    appSettings.emitter.on('setSizePopupWithAnimation', this.setSizePopupWithAnimation)
+    appSettings.emitter.on(
+      "setSizePopupWithAnimation",
+      this.setSizePopupWithAnimation
+    );
   }
 
   setShow(status: boolean) {
@@ -178,43 +181,63 @@ export class Main extends LitElement {
     }
   }
 
-  setSizePopupWithAnimation({ top, left, width, height }: { top?: number; left?: number; width: number; height: number }) {
+  setSizePopupWithAnimation({
+    top,
+    left,
+    width,
+    height,
+  }: {
+    top?: number;
+    left?: number;
+    width: number;
+    height: number;
+  }) {
     this.setTransition();
-    this.style.height = height > 0 ? height + 'px' : ''
-    this.setPosition({top, left});
+    this.style.height = height > 0 ? height + "px" : "";
+    this.setPosition({ top, left });
     this.setMaxWidth(width);
-    appSettings.emitter.emit('setSizePopupWithAnimationDone')
+    appSettings.emitter.emit("setSizePopupWithAnimationDone");
   }
 
-  setTransition() {
-    this.style.transition = 'all 300ms';
+  getRealHeight() {
+    return (this.shadowRoot?.querySelector(".fastcard-body") as HTMLDivElement)
+      ?.offsetHeight;
+  }
+
+  setTransition(cb?: () => void) {
+    this.style.transition = "all 300ms";
 
     this.timerTransition = setTimeout(() => {
-      this.style.transition = ''
-    }, 300)
+      this.style.transition = "";
+      appSettings.emitter.emit("animationDone");
+      cb && cb();
+    }, 300);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.removeEventListener('focus', this.handlePopupFocus)
-    this.removeEventListener('blur', this.handlePopupBlur)
-    appSettings.emitter.off('setSizePopupWithAnimation', this.setSizePopupWithAnimation)
+    this.removeEventListener("focus", this.handlePopupFocus);
+    this.removeEventListener("blur", this.handlePopupBlur);
+    appSettings.emitter.off(
+      "setSizePopupWithAnimation",
+      this.setSizePopupWithAnimation
+    );
   }
-  handlePopupFocus () {
-    this.style.opacity = '1'
-    this.setTransition()
-    this.isPopupActive = true
-    appSettings.emitter.emit('popupActive')
-    clearTimeout(this.timerFocusout)
+  handlePopupFocus() {
+    this.style.opacity = "1";
+    this.setTransition();
+    this.isPopupActive = true;
+    appSettings.emitter.emit("popupActive");
+    clearTimeout(this.timerFocusout);
   }
   handlePopupBlur() {
-    clearTimeout(this.timerFocusout)
+    clearTimeout(this.timerFocusout);
     this.timerFocusout = setTimeout(() => {
-      this.isPopupActive = false
-      this.style.opacity = '.35'
-      this.setTransition()
-      appSettings.emitter.emit('popupUnActive')
-    }, this.timeCountUnActive)
+      this.isPopupActive = false;
+      this.style.opacity = ".35";
+      this.setTransition();
+      appSettings.emitter.emit("popupUnActive");
+    }, this.timeCountUnActive);
   }
 
   render() {
@@ -224,7 +247,10 @@ export class Main extends LitElement {
         ${style}
       </style>
       <div
-        class="fastcard-body relative border border-t-0 overflow-hidden ${this.isPopupActive ? 'border-sky-500' : "border-slate-500"}  before:absolute before:top-0 before:left-0 before:w-full before:h-[2px] before:bg-sky-400"
+        class="fastcard-body relative border border-t-0 overflow-hidden ${this
+          .isPopupActive
+          ? "border-sky-500"
+          : "border-slate-500"}  before:absolute before:top-0 before:left-0 before:w-full before:h-[2px] before:bg-sky-400"
       >
         <span-width
           position="left"

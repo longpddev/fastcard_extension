@@ -9,6 +9,8 @@ export enum BreakPoint {
   "lg" = 768,
 }
 
+export const CONST_REMOVE = {};
+
 export enum MAIN_PAGE {
   home = "homePage",
   addCard = "addCardPage",

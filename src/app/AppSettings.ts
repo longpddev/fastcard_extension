@@ -1,4 +1,4 @@
-import { MAIN_PAGE } from "./../constant";
+import { CONST_REMOVE, MAIN_PAGE } from "./../constant";
 import { TinyEmitter } from "tiny-emitter";
 import { Maybe } from "../common";
 
@@ -9,12 +9,19 @@ const appContext: any = {
 
 export const appSettings = {
   emitter: new TinyEmitter(),
-
+  REMOVE: CONST_REMOVE,
   get(key: string) {
     if (key in appContext) return appContext[key];
   },
 
   set(key: string, value: any) {
+    if (value === CONST_REMOVE) {
+      delete appContext[key];
+      setTimeout(() => {
+        this.emitter.emit(key + "Remove");
+      }, 0);
+      return this;
+    }
     appContext[key] = value;
     setTimeout(() => {
       this.emitter.emit(key + "Change");
