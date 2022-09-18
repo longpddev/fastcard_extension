@@ -5,6 +5,8 @@ import { getSelect } from "../common";
 
 @customElement("short-icon-add-card")
 export class ShortIconAddCard extends LitElement {
+  timer = 0;
+
   constructor() {
     super();
 
@@ -16,17 +18,17 @@ export class ShortIconAddCard extends LitElement {
     this.style.display = "none";
     this.style.position = "fixed";
     this.style.zIndex = "10000";
-    this.style.setProperty('-webkit-user-select', 'none');
-    this.style.setProperty('-moz-user-select', 'none');
-    this.style.setProperty('-ms-user-select', 'none');
-    this.style.setProperty('user-select', 'none');
+    this.style.setProperty("-webkit-user-select", "none");
+    this.style.setProperty("-moz-user-select", "none");
+    this.style.setProperty("-ms-user-select", "none");
+    this.style.setProperty("user-select", "none");
 
     document.addEventListener("selectionchange", this.handlePointerup);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-
+    clearTimeout(this.timer);
     document.removeEventListener("selectionchange", this.handlePointerup);
   }
 
@@ -39,6 +41,11 @@ export class ShortIconAddCard extends LitElement {
   }
 
   handlePointerup() {
+    clearTimeout(this.timer);
+    this.style.pointerEvents = "none";
+    this.timer = setTimeout(() => {
+      this.style.pointerEvents = "";
+    }, 500);
     const select = getSelect();
 
     if (select === null) return this.showEl(false);
