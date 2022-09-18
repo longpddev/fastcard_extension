@@ -34,7 +34,7 @@ export class LoginForm extends BaseElement {
     this.emitter.emit("login", { email: this.email, password: this.password });
     this.isLoading = true;
 
-    fetchLogin(this.email, this.password).catch((e) => {
+    fetchLogin(this.email, this.password).catch(() => {
       this.showMessage(
         html`<p class=" text-red-400 text-2xl">
           Username or password wrong please try again
