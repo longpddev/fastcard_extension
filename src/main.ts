@@ -242,7 +242,7 @@ export class Main extends LitElement {
         ${style}
       </style>
       <div
-        class="fastcard-body relative border border-t-0 overflow-hidden ${this
+        class="fastcard-body relative border-[.5px] rounded-[5px] border-t-0 overflow-hidden ${this
           .isPopupActive
           ? "border-sky-500"
           : "border-slate-500"}  before:absolute before:top-0 before:left-0 before:w-full before:h-[2px] before:bg-sky-400"
