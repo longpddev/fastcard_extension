@@ -48,22 +48,24 @@ export async function fetchGetCardLearnToday() {
   if (Object.keys(settings).length === 0)
     throw new Error("Setting user doesn't load yet");
   const result = await Promise.all(
-    groupCardIds.map(async (groupId: number) => {
-      const card = await clientAuth.GET("/card/learn-today", {
-        params: {
-          limit: settings.maxCardInDay,
-          groupId,
-        },
-      });
+    (Array.isArray(groupCardIds) ? groupCardIds : [groupCardIds]).map(
+      async (groupId: number) => {
+        const card = await clientAuth.GET("/card/learn-today", {
+          params: {
+            limit: settings.maxCardInDay,
+            groupId,
+          },
+        });
 
-      return {
-        groupId,
-        card: {
-          rows: card.data.rows,
-          count: card.data.count,
-        },
-      };
-    })
+        return {
+          groupId,
+          card: {
+            rows: card.data.rows,
+            count: card.data.count,
+          },
+        };
+      }
+    )
   );
   appSettings.set("cardLearnToday", result);
   return result;
@@ -76,11 +78,11 @@ export async function fetchMainDataWhenLogin() {
   appSettings.emitter.emit("fetchMainDataWhenLoginDone");
 }
 
-interface IFetchCreateCard {
+export interface IFetchCreateCard {
   groupId: number;
   question_detail: string;
   answer_detail: string;
-  explain_detail: string;
+  explain_detail?: string;
 }
 export async function fetchCreateCard({
   groupId,
@@ -88,31 +90,40 @@ export async function fetchCreateCard({
   answer_detail,
   explain_detail,
 }: IFetchCreateCard) {
-  const result = await clientAuth.POST("/card", {
-    body: {
-      info: {
-        cardGroupId: groupId,
-      },
-      cardQuestion: {
-        imageId: null,
-        content: question_detail,
-        type: CARD_TYPE.question,
-        cardGroupId: groupId,
-      },
-      cardAnswer: {
-        imageId: null,
-        content: answer_detail,
-        type: CARD_TYPE.answer,
-        cardGroupId: groupId,
-      },
-      cardExplain: {
-        imageId: null,
-        content: explain_detail,
-        type: CARD_TYPE.explain,
-        cardGroupId: groupId,
-      },
-    },
-  });
+  const result = await clientAuth.POST(
+    explain_detail ? "/card" : "/card/noexplain",
+    {
+      body: (() => {
+        const result: any = {
+          info: {
+            cardGroupId: groupId,
+          },
+          cardQuestion: {
+            imageId: null,
+            content: question_detail,
+            type: CARD_TYPE.question,
+            cardGroupId: groupId,
+          },
+          cardAnswer: {
+            imageId: null,
+            content: answer_detail,
+            type: CARD_TYPE.answer,
+            cardGroupId: groupId,
+          },
+        };
+
+        if (explain_detail) {
+          result.explain_detail = {
+            imageId: null,
+            content: explain_detail,
+            type: CARD_TYPE.explain,
+            cardGroupId: groupId,
+          };
+        }
+        return result;
+      })(),
+    }
+  );
 
   appSettings.emitter.emit("fetchCreateCardDone");
   return result;

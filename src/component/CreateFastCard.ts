@@ -3,7 +3,7 @@ import { html, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { BaseElement } from "../BaseElement";
 import { BreakPoint } from "../constant";
-import { fetchCreateCard } from "../api/point";
+import { fetchCreateCard, IFetchCreateCard } from "../api/point";
 
 enum Fields {
   question_detail = "question_detail",
@@ -64,20 +64,23 @@ export class CreateFastCard extends BaseElement {
     if (!this.isFirstSubmit) this.isFirstSubmit = true;
 
     if (
-      !["question_detail", "answer_detail", "explain_detail", "groupId"]
+      !["question_detail", "answer_detail", "groupId"]
         .map((value) =>
           this.validate(this[value as keyof typeof this] as string, value)
         )
         .every((item) => item.length === 0)
     )
       return;
-
-    fetchCreateCard({
+    const data: IFetchCreateCard = {
       groupId: this.groupId,
       question_detail: this.question_detail,
       answer_detail: this.answer_detail,
-      explain_detail: this.explain_detail,
-    })
+    };
+
+    if (this.explain_detail) {
+      data.explain_detail = this.explain_detail;
+    }
+    fetchCreateCard(data)
       .then(() => {
         this.question_detail = "";
         this.answer_detail = "";
@@ -119,7 +122,6 @@ export class CreateFastCard extends BaseElement {
     const caseOb = {
       answer_detail: requireValue,
       question_detail: requireValue,
-      explain_detail: requireValue,
       groupId: () => {
         const groupId = appSettings
           .map("groupCard")((item) => item.entities)
@@ -227,11 +229,6 @@ export class CreateFastCard extends BaseElement {
               ).value)}"
           >
           </textarea>
-          <p class="text-red-400 font-semibold text-sm mb-2">
-            ${this.isFirstSubmit
-              ? this.validate(this.explain_detail, Fields.explain_detail)
-              : ""}
-          </p>
         </div>
 
         <div class="flex mt-4">
