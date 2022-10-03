@@ -1,5 +1,5 @@
-export const hostApi = "http://139.162.50.214:6969";
-export const homePage = "http://139.162.50.214:3000";
+export const hostApi = "https://server.longpddev.xyz";
+export const homePage = "https://longpddev.xyz";
 export const baseUrl = `${hostApi}/api/v1`;
 export const signUp = homePage + "/sign-up";
 
