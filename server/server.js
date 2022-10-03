@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 const fs = require("fs");
 const port = 6600;
-const host = "https://server.longpddev.xyz";
+const host = "http://139.162.50.214";
 app.use(cors());
 app.use("/public", express.static(__dirname + "/public"));
 function getPageFileJs() {
